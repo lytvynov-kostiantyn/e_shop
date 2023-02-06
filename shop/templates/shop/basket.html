@@ -1,0 +1,74 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="text-align: center; color: red;">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+    <div class="container">
+
+        {% if user.is_authenticated %}
+            <div style="text-align: center;"><h5>Hello, {{ user.username }}!</h5></div>
+        {% endif %}
+        <form action="{% url 'make_order' %}" id="order_form" method="post">
+            {% csrf_token %}
+            <div style="max-width: 50%;">
+                {{ personal_inf }}
+            </div>
+
+            <div class="basket">
+
+                <input type="hidden" name="order_list" id="order_list">
+
+                {% if basket is None %}
+                <h5 style="text-align: center; padding-top: 10px; padding-bottom: 10px;">Your basket is empty(</h5>
+                {% else %}
+                    <h5 style="text-align: center; padding-top: 10px;">Your basket:</h5>
+                    <ol>
+                        {% for product in basket %}
+                            <div id="basket_product_{{product.id}}" style="display: flex; flex-direction: row; align-items: baseline; padding-bottom: 10px; width: 100%;">
+                                <li style="width: 60%;">{{product.title}}</li>
+                                <div style="width: 25%; display: flex; flex-direction: row; align-items: baseline; justify-content: center;">
+                                    <span id="remove_amount_{{product.id}}" data-id="{{product.id}}" class="btn2" style="width: 25px;">-</span>
+                                    <input id="amount_{{product.id}}" name="{{product.id}}" type="text" class="form-control" style="max-width: 50px; font-size: 14px; text-align: center;" value="1">
+                                    <span id="add_amount_{{product.id}}" data-id="{{product.id}}" data-amount="{{product.amount}}" class="btn2" style="width: 25px;">+</span>
+                                </div>
+                                <div style="width: 15%; text-align: center;"><span id="price_{{product.id}}">{{product.price}}</span>$</div>
+                            </div>
+                        {% endfor %}
+                    </ol>
+                    <ul style="display: flex; flex-direction: row; align-items: baseline; padding-bottom: 10px;">
+                        <div style="width: 85%; display: flex; flex-direction: row; align-items: baseline; justify-content: flex-start;">
+                            <h6 id="total_price"></h6>
+                            {% if discount %}
+                                <span style="font-size: 12px; padding-left: 5px;">(Your discont is <span id="discount">{{discount}}</span>%)</span>
+                            {% endif %}
+                        </div>
+                        <div style="width: 15%; text-align: center;">
+                            <span id="clear_basket" class="btn2" style="padding: 3px;">Clear</span> 
+                        </div>
+                    </ul> 
+                {% endif %}
+            </div>
+
+            <div style="margin-bottom: 50px;"><a id="make_order" onclick="make_order()" class="btn">Make an order</a></div>
+        </form>
+
+    <script>
+        document.getElementById("id_first_name").value = "{{ user.first_name }}";
+        document.getElementById("id_last_name").value = "{{ user.last_name }}";
+        document.getElementById("id_email").value = "{{ user.email }}";
+        document.getElementById("id_address").value = "{{ user.address }}";
+        document.getElementById("id_phone_number").value = "{{ user.phone_number }}";
+
+        document.getElementById("order_list").value = JSON.parse(localStorage.getItem("buy_product"));
+
+        window.onload = function() {
+            total_count()
+        };
+    </script>
+
+{% endblock %}

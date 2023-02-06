@@ -1,0 +1,100 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+{% load static %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="text-align: center; color: #f55449;">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <div class="row" style="padding-top: 0px; padding-bottom: 20px;">
+            <div class="col" style="display: flex; justify-content: center;">
+                {% if product.image_link %}
+                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; max-height: 500px; max-width: 500px; min-width: 355px; min-height: 255px;">
+                        <img src="{{ product.image_link }}" class="image">
+                    </div>
+                {% else %}
+                    {% load static %}
+                    <div style="max-height: 500px; max-width: 500px; min-width: 355px; min-height: 255px;">
+                        <img src="{% static 'shop/img/no-image.png' %}" class="image">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col" style="text-align: left;">
+                <div style="display: flex; flex-direction: row; align-items: baseline; justify-content: space-between;">
+                    <div><p><h2>{{ product.title }}</h2></p></div>
+                    <div style="display: flex; flex-direction: row; align-items: baseline; right: 0;">
+                        {% if user.is_authenticated %}
+                        <div class="line" style="display: flex; flex-direction: row; align-items: baseline">
+                                <div id="dellfromwatchlist-{{ product.id }}" {% if user.id in product.watchlist_list_id %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+                                    <button style="border: none; padding: 0;">
+                                        <img data-id="{{ product.id }}" id="watchlist-edit-{{ product.id }}" src="{% static 'shop/img/-.png' %}" style="height: 30px; width: 30px;">
+                                    </button>
+                                </div>
+                                <div id="addtowatchlist-{{ product.id }}" {% if user.id in product.watchlist_list_id %} style="display: none;" {% else %} style="display: block;" {% endif %}>
+                                    <button style="border: none; padding: 0;">
+                                        <img data-id="{{ product.id }}" id="watchlist-edit-{{ product.id }}" src="{% static 'shop/img/+.png' %}" style="height: 30px; width: 30px;">
+                                    </button>
+                                </div>
+                        </div>
+                        {% endif %}
+                        <div style="margin-left: 10px;">
+                            <button class="btn" id="buy_product_{{ product.id }}" data-id="{{ product.id }}">
+                                Buy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="short_description2"><u>Description:</u> {{ product.description }}</p>
+                <p><u>Category:</u> {{ product.category }}</p>
+                <p><h5><u>Price:</u> {{ product.price }}$</u></h5></p>
+            </div>
+        </div>
+
+        {% if comments %}
+            <table class="table table-sm">
+                <thead>
+                    <tr style="text-align: center; color: whitesmoke;">
+                        <th scope="col">User name</th>
+                        <th scope="col">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in comments %}
+                    <tr style="text-align: center; color: whitesmoke;">
+                        <td width="120px">
+                            <p>{{row.user}}</p>
+                            <p style="font-size: 10px;">({{row.time_of_creation}})</p>
+                        </td>
+                        <td class="comment">{{row.comment}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            {% if new_comment %}
+            <form action="{% url 'new_comment' product.id %}" method="post">
+                <div style="display: flex; flex-direction: row;">
+                    <div style="width: 120px">
+                        <p style="text-align: center;">Add new comment</p>
+                        <button class="btn" type="submit">
+                            Publish
+                        </button>
+                    </div>
+                    <div style="margin-left: 10px; width: 100%;">
+                        {% csrf_token %}
+                        {{ new_comment }}
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        {% endif %}
+        <div style="margin-bottom: 50px;"></div>
+
+{% endblock %}

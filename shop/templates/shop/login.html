@@ -1,0 +1,32 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+    <div style="text-align: center;">
+        <h3>We are glad to see you again!</h3>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="text-align: center; color: #f55449;">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div style="max-width: 500px; min-width: auto; margin-left: auto; margin-right: auto;">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <input class="btn" type="submit" value="Login">
+        </form>
+    </div>
+
+    <div style="text-align: center;">
+        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    </div>
+
+{% endblock %}

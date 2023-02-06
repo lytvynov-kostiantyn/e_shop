@@ -1,0 +1,24 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+    <div>
+        <h3 style="text-align: center;">Discount program</h3>
+        <p><a href="{% url 'register' %}">Register</a> on the site and get a 5% discount on your first order.</p>
+        <p>And also:</p>
+        <div style="margin-left: 50px; margin-right: 10px;">
+            <li>monitor the amount of the discount and the cost of purchases in your personal account</li>
+            <li>get bonuses</li>
+            <li>leave reviews about products</li>
+            <li>add products to watchlist</li>
+        </div>
+        <p style="margin-top: 15px;">The loyalty program discount cannot be combined with other discounts on the site (unless specified separately)</p>
+        <div style="margin-left: 50px; margin-right: 10px;">
+        <li>Register - 5% discount</li>
+        <li>500$ - 6% discount</li>
+        <li>1000$ - 7% discount</li>
+        <li>2000$ - 10% discount</li>
+        </div>
+    </div>
+
+{% endblock %}

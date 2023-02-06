@@ -1,0 +1,23 @@
+{% autoescape off %}
+
+Hello. We have a new order!
+
+Personal customer information :
+First name: {{first_name}}
+Last name: {{last_name}}
+Address: {{address}}
+Phone number: {{phone_number}}
+Email: {{email}}
+
+Order ID : {{order_id}}
+Total price: {{total}}$
+
+Order list:
+{% for i in order %}
+    {{ i }}
+{% endfor %}
+
+To Confirm order:
+{{ protocol }}://{{ domain }}{% url 'order_close' uidb64=uid token=token %}
+
+{% endautoescape %}

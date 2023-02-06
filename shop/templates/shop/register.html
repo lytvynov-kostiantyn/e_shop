@@ -1,0 +1,25 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+    <div style="text-align: center;">
+        <h3>Welcome</h3>
+    </div>
+
+    {% if message %}
+        <div style="text-align: center; color: #f34a4a;">{{ message }}</div>
+    {% endif %}
+
+    <div style="max-width: 500px; min-width: auto; margin-left: auto; margin-right: auto;">
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            {{ registration_form }}
+            <input class="btn" style="margin-top: 10px" type="submit" value="Register">
+        </form>
+    </div>
+
+    <div style="text-align: center;">
+        Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="text-align: center; color: #f55449;">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="container">
+        <div style="text-align: center;"><h5>We are glad to see you again, {{ user.username }}!</h5></div>
+        <div style="max-width: 50%;">
+            <form action="{% url 'personal_inf' %}" method="post">
+                {% csrf_token %}
+                {{ personal_inf }}
+                <input class="btn" type="submit" value="Save edits" style="margin-top: 10px; left: 47px;">
+            </form>
+        </div>
+        <div style="padding-top: 10px;"><h5>Now your discount is {{ discount }}%!</h5></div>
+        <div style="display: flex; flex-direction: row; align-items: baseline;">
+            <h5>Your watchlist:</h5>
+            <button class="btn" id="btn_watchlist_show" style="padding: 2px; left: 30px; display: block;">Show</button>
+            <button class="btn" id="btn_watchlist_hide" style="padding: 2px; left: 30px; display: none;">Hide</button>
+        </div>
+        <div id="watchlist_container" style="display: none; margin-bottom: 20px;">
+            <div class="grid_container">
+                {% for product in watchlist %}
+                    <a href="{% url 'product' product.id %}" style="text-align: center;">
+                        <button class="lot_presentation">
+                            <div style="height: 60%; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                {% if product.image_link %}
+                                    <img src="{{ product.image_link }}" class="image" style="max-height: 100%; max-width: 100%;">
+                                {% else %}
+                                    {% load static %}
+                                    <img src="{% static 'shop/no-image.png' %}" class="image">
+                                {% endif %}
+                            </div>
+                            <div style="height: 40%;">
+                                <div class="short_description">{{ product.title }}</div>
+                                <div class="short_description">{{ product.brand }}</div>
+                                <div class="short_description">{{ product.price }}$</div>
+                            </div>
+                        </button>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("id_first_name").value = "{{ user.first_name }}";
+        document.getElementById("id_last_name").value = "{{ user.last_name }}";
+        document.getElementById("id_email").value = "{{ user.email }}";
+        document.getElementById("id_address").value = "{{ user.address }}";
+        document.getElementById("id_phone_number").value = "{{ user.phone_number }}";
+
+        document.getElementById("id_email").setAttribute("disabled", "disabled"); 
+
+        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('click', event => {
+            const element = event.target;
+
+            if (element.id.startsWith('btn_watchlist_hide')) {
+                console.log('hide')
+                document.getElementById("btn_watchlist_show").style.display = "block";
+                document.getElementById("btn_watchlist_hide").style.display = "none";
+                document.getElementById("watchlist_container").style.display = "none";
+            }
+
+            if (element.id.startsWith('btn_watchlist_show')) {
+                console.log('show')
+                document.getElementById("btn_watchlist_hide").style.display = "block";
+                document.getElementById("btn_watchlist_show").style.display = "none";
+                document.getElementById("watchlist_container").style.display = "block";
+            }
+        })
+        return false;
+        })
+    </script>
+
+{% endblock %}

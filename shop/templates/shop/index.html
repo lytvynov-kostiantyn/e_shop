@@ -1,0 +1,76 @@
+{% extends "shop/layout.html" %}
+
+{% block main %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="text-align: center; color: red;">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+    <div class="row" id="inex_row">
+        <div class="col" id="category_list">
+            <nav class="navside" id="inex_navside" style="height: 100%">
+                {% for category in categories %}
+                <div style="margin-bottom: 10px;">
+                    <a id="category_{{category.id}}" data-id="{{category.id}}" style="text-decoration: none;" href="{% url 'category_list' category.name_category %}"><img src="{{category.category_image_link}}" class="category_logo">{{category.name_category}}</a>
+                </div>
+                {% endfor %}
+                <div style="border-top-color: whitesmoke; border-top-style: solid; border-top-width: 1px; padding-top: 5px;">
+                    <a style="text-decoration: none;" href="">Contact us</a>
+                </div>
+            </nav>
+        </div>
+
+        <!--Carousel-->
+        <div class="col" id="sale_carousel">
+            <div id="carouselExampleInterval" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for sale in sales %}
+                        <div class="carousel-item active" data-bs-interval="2000">
+                            <img src="{{sale.sale_img}}" style="max-width: 1200px; max-height: 500px;" class="d-block w-100">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <div id="random" style="padding-bottom: 40px;">
+                <h4 style="margin-left: 20px; margin-bottom: 20px;">Perhaps you will be interested in:</h4>
+                <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                    {% for random in random_products %}
+                        <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; flex-basis: 150px; flex-grow: 0; flex-shrink: 1; ">
+                            <a href="{% url 'product' random.id %}" style="width: 100%; margin: 5px;">
+                                <button class="lot_presentation2" style="width: 100%;">
+                                    <div style="height: 60%; width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                        {% if random.image_link %}
+                                            <img src="{{ random.image_link }}" class="image" style="max-height: 100%; max-width: 100%;">
+                                        {% else %}
+                                            {% load static %}
+                                            <img src="{% static 'shop/img/no-image.png' %}" class="image">
+                                        {% endif %}
+                                    </div>
+                                    <div style="height: 40%; width: 100%;">
+                                        <div class="short_description" style="max-width: 140px;">{{ random.title }}</div>
+                                        <div class="short_description" style="max-width: 140px;">{{ random.price }}$</div>
+                                    </div>
+                                </button>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
