@@ -1,3 +1,4 @@
+from django.utils.decorators import method_decorator
 from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -9,10 +10,11 @@ from django.contrib.auth.tokens import default_token_generator as token_generato
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 import random
+
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .utils import send_email_verify, send_email_confirm_order, discount
 from .models import BrandFilter, Category, CountryFilter, Product, Sale, User, Comments, Basket
@@ -251,6 +253,7 @@ def filters(request):
 
 
 # Rendering product page
+@ensure_csrf_cookie
 def product(request, pk):
     # checking page in db
     try:
