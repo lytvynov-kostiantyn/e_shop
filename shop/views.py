@@ -9,7 +9,6 @@ from django.contrib.auth.tokens import default_token_generator as token_generato
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 import random
@@ -294,7 +293,6 @@ def new_comments(request, pk):
 
 
 # AJAX
-@csrf_exempt
 @login_required
 def watchlist(request, pk):
     if request.method != "POST":
@@ -336,7 +334,6 @@ def user_account(request):
     })
 
 
-@csrf_exempt
 @login_required
 def personal_inf(request):
     if request.method == "POST":
