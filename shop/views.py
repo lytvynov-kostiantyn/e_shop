@@ -294,7 +294,6 @@ def new_comments(request, pk):
 
 
 # AJAX
-@csrf_exempt
 @login_required
 def watchlist(request, pk):
     if request.method != "POST":
@@ -336,7 +335,6 @@ def user_account(request):
     })
 
 
-@csrf_exempt
 @login_required
 def personal_inf(request):
     if request.method == "POST":
