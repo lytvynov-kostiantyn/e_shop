@@ -336,7 +336,6 @@ def user_account(request):
     })
 
 
-@csrf_exempt
 @login_required
 def personal_inf(request):
     if request.method == "POST":
