@@ -34,8 +34,8 @@ ALLOWED_HOSTS = [
     'LytvynovKostiantyn.pythonanywhere.com'
 ]
 
+# Don`t send cookie by http
 SESSION_COOKIE_SECURE = True
-
 CSRF_COOKIE_SECURE = True
 
 AUTH_USER_MODEL = 'shop.User'
@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'e_shop.urls'
@@ -142,3 +143,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Content security policy protect
+CSP_DEFAULT_SRC = ('self', )
+CSP_STYLE_SRC = ('self', )
+CSP_SCRIPT_SRC = ('self', )
+CSP_IMG_SRC = ('self', )
+CSP_FONT_SRC = ('self', )
