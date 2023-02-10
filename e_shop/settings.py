@@ -34,6 +34,10 @@ ALLOWED_HOSTS = [
     'LytvynovKostiantyn.pythonanywhere.com'
 ]
 
+SESSION_COOKIE_SECURE = True
+
+SCRF_COOKIE_SECURE = True
+
 AUTH_USER_MODEL = 'shop.User'
 
 # sending emails
