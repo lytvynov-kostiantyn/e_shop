@@ -1,4 +1,3 @@
-from django.utils.decorators import method_decorator
 from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
