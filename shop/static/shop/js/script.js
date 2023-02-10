@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // cleaning local storage
         if (element.id.startsWith('make_order')) {
+            make_order();
             localStorage.clear();
         }
     })
@@ -183,19 +184,21 @@ document.getElementById("category").value = localStorage.getItem('category');
 
 
 // saving price limits to localstorage
-function handleInput()
-{
-  localStorage.setItem('price_from', document.getElementById("price_from").value);
-  localStorage.setItem('price_to', document.getElementById("price_to").value);
+function handleInput() {
+    localStorage.setItem('price_from', document.getElementById("price_from").value);
+    localStorage.setItem('price_to', document.getElementById("price_to").value);
 }
+
 
 // from stackoverflow
 // sending filter_form when user clicks on 'Enter'
 document.getElementById('filter_form').addEventListener('keydown', function(e){
-  if (e.keyCode == 13) {
-    this.submit();
-  }
+    if (e.keyCode == 13) {
+        handleInput()
+        this.submit();
+    }
 })
+
 
 // from django documentation
 function getCookie(name) {

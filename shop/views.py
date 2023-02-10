@@ -316,8 +316,8 @@ def watchlist(request, pk):
 @login_required
 def user_account(request):
     # form for changing personal inf
-    user_form = UserForm()
     user = User.objects.get(username=request.user.username)
+    user_form = UserForm(instance=user)
 
     # size of user discount
     money_amount = user.purchase_amount
@@ -373,6 +373,7 @@ def basket(request):
 
     if request.user.username:
         user = User.objects.get(username=request.user.username)
+        user_form = UserForm(instance=user)
         money_amount = user.purchase_amount
         user_discount = discount(money_amount)
     else:

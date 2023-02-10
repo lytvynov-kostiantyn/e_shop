@@ -19,7 +19,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -91,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'e_shop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -120,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -131,7 +128,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -145,8 +141,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Content security policy protect
-CSP_DEFAULT_SRC = ('self', )
-CSP_STYLE_SRC = ('self', )
-CSP_SCRIPT_SRC = ('self', )
-CSP_IMG_SRC = ('self', )
-CSP_FONT_SRC = ('self', )
+CSP_DEFAULT_SRC = ("'none'",)
+CSP_STYLE_SRC = (
+    "'self'",
+    "https://cdn.jsdelivr.net",
+    "'unsafe-inline'")
+
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "https://cdn.jsdelivr.net",
+    "https://cdnjs.cloudflare.com"
+)
+
+CSP_IMG_SRC = ("*",)
+CSP_FONT_SRC = ("'self'",)
+CSP_CONNECT_SRC = ("'self'",)
+CSP_FRAME_SRC = ("*",)
+CSP_FRAME_ANCESTORS = ("'none'",)
+CSP_BASE_URI = ("'none'",)
+CSP_OBJECT_SRC = ("'none'",)
