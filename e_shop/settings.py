@@ -145,7 +145,8 @@ CSP_DEFAULT_SRC = ("'none'",)
 CSP_STYLE_SRC = (
     "'self'",
     "https://cdn.jsdelivr.net",
-    "'unsafe-inline'")
+    "'unsafe-inline'"
+)
 
 CSP_SCRIPT_SRC = (
     "'self'",
@@ -160,3 +161,8 @@ CSP_FRAME_SRC = ("*",)
 CSP_FRAME_ANCESTORS = ("'none'",)
 CSP_BASE_URI = ("'none'",)
 CSP_OBJECT_SRC = ("'none'",)
+
+# HSTS headers
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_PRELOAD = True
