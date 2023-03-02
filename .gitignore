@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,windows,python,venv,git,django
 
 container.sh
-e_shop/.env
+e_shop_django/.env
 
 ### Django ###
 *.log
